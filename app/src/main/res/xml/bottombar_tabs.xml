@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<tabs>
+    <tab
+        id="@+id/tab_favorites1"
+        icon="@drawable/ic_android"
+        title="Favorites" />
+    <tab
+        id="@+id/tab_favorites2"
+        icon="@drawable/ic_android"
+        title="Nearby" />
+    <tab
+        id="@+id/tab_favorites3"
+        icon="@drawable/ic_android"
+        title="Friends" />
+
+    <tab
+        id="@+id/tab_favorites4"
+        icon="@drawable/ic_android"
+        title="Favorites" />
+    <tab
+        id="@+id/tab_favorites5"
+        icon="@drawable/ic_android"
+        title="Nearby" />
+
+</tabs>

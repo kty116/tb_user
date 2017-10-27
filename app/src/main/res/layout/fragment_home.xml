@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/parent_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:visibility="invisible"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/member_name_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="회원 이름" />
+
+        <TextView
+            android:id="@+id/grade_order_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="등급 순번" />
+
+        <TextView
+            android:id="@+id/grade_name_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="등급 이름" />
+
+        <TextView
+            android:id="@+id/mail_box_number_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="사서함 번호" />
+
+        <TextView
+            android:id="@+id/deposit_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="예치금" />
+
+        <TextView
+            android:id="@+id/pay_count_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="결제건수" />
+
+        <TextView
+            android:id="@+id/pay_price_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="결제금액" />
+
+        <TextView
+            android:id="@+id/message_count_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="쪽지" />
+
+    </LinearLayout>
+</layout>

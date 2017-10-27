@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!--<declare-styleable name="CustomLoginEditText">-->
+    <!--<attr name="null_check" format="boolean"/>-->
+    <!--<attr name="name" format="string"/>-->
+    <!--<attr name="hint" format="string"/>-->
+    <!--<attr name="inputType" format="string"/>-->
+    <!--</declare-styleable>-->
+
+    <declare-styleable name="CustomEditText">
+        <attr name="key" format="string" />
+        <attr name="character_limit" format="enum">
+            <enum name="english_and_numbers_only" value="0" />
+            <enum name="numbers_only" value="1" />
+            <enum name="hangul_only" value="2" />
+            <enum name="password" value="3" />
+            <enum name="english_only" value="4" />
+        </attr>
+        <!--<attr name="hint" format="string" />-->
+        <!--<attr name="language_korean" format="string"/>-->
+        <!--<attr name="language_chinese" format="string"/>-->
+        <!--<attr name="hint_color" format="enum" >-->
+            <!--<enum name="white" value="0"/>-->
+            <!--<enum name="gray" value="1"/>-->
+        <!--</attr>-->
+        <!--<attr name="line_color" format="integer|reference|color"/>-->
+        <!--<attr name="text_color" format="integer|reference|color"/>-->
+    </declare-styleable>
+    <declare-styleable name="CustomTextView">
+        <attr name="default_text" format="string" />
+    </declare-styleable>
+
+
+    <!--<declare-styleable name="LoginButton">-->
+
+    <!--<attr name="text" format="reference|string" />-->
+    <!--<attr name="textColor" format="reference|integer" />-->
+    <!--</declare-styleable>-->
+
+
+</resources>

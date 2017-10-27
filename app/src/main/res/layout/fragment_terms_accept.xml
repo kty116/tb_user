@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/parent_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#ffffff"
+        android:focusable="true"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:focusableInTouchMode="true"
+        android:orientation="vertical">
+
+        <TextView
+            android:textStyle="bold"
+            android:textColor="@color/colorPrimary"
+            style="@style/medium_list_text_style"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="약관 동의" />
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="100dp">
+
+            <TextView
+                style="@style/small_list_text_style"
+                android:padding="@dimen/default_padding"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="@string/shipping_notice"
+                android:textSize="@dimen/small_text_size" />
+        </ScrollView>
+
+        <CheckBox
+            android:textColor="#000000"
+            style="@style/medium_list_text_style"
+            android:id="@+id/notice_check_box"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="주의사항을 모두 숙지하였으며, 위 약관에 동의합니다." />
+
+        <TextView
+            android:textStyle="bold"
+            android:textColor="@color/colorPrimary"
+            style="@style/medium_list_text_style"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="배송 센터" />
+
+        <TextView
+            android:id="@+id/center_text"
+            style="@style/small_list_text_style"
+            android:padding="@dimen/default_padding"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textSize="@dimen/small_text_size" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/cancel_button"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="취소" />
+
+            <Button
+                android:id="@+id/confirm_button"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="다음" />
+        </LinearLayout>
+    </LinearLayout>
+</layout>

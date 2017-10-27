@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:text="가입경로"
+    style="@style/small_list_text_style"
+    android:textSize="12dp"
+    android:padding="3dp"
+    />
+
+

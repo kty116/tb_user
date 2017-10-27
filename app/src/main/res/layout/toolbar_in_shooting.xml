@@ -1,0 +1,61 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/parent_layout"
+    android:layout_width="match_parent"
+    android:layout_height="45dp"
+    android:focusable="true"
+    android:background="@color/colorAccent"
+    android:focusableInTouchMode="true"
+    android:orientation="horizontal"
+    android:padding="@dimen/default_padding">
+
+    <android.support.v7.widget.CardView
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:layout_weight="1">
+
+        <EditText
+            android:maxLines="1"
+            style="@style/small_list_text_style"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:hint="타오바오 검색"
+            android:textSize="@dimen/medium_text_size" />
+
+    </android.support.v7.widget.CardView>
+
+    <!--<android.support.v7.widget.CardView-->
+    <!--android:layout_width="0dp"-->
+    <!--android:layout_height="match_parent"-->
+    <!--android:layout_gravity="center"-->
+    <!--android:layout_weight="1">-->
+
+    <!--<android.support.v7.widget.SearchView-->
+    <!--android:id="@+id/tracking_number_search_view"-->
+    <!--style="@style/SearchViewMy"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent"-->
+    <!--android:inputType="textVisiblePassword"-->
+    <!--app:closeIcon="@drawable/ic_close"-->
+    <!--app:iconifiedByDefault="false"-->
+    <!--app:queryHint="타오바오 검색" />-->
+    <!--</android.support.v7.widget.CardView>-->
+
+    <ImageView
+        android:layout_width="25dp"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="10dp"
+        android:src="@drawable/ic_search" />
+
+    <ImageView
+        android:layout_width="18dp"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="10dp"
+        android:src="@drawable/top_icon_filter" />
+
+</LinearLayout>
