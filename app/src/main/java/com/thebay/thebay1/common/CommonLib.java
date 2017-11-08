@@ -13,6 +13,10 @@ import com.thebay.thebay1.SubActivity;
 import com.thebay.thebay1.dto.KeyDTO;
 import com.thebay.thebay1.dto.MemberDTO;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 /**
  * Created by kyoungae on 2017-09-18.
  */
@@ -91,7 +95,48 @@ public class CommonLib {
         Bundle bundle = new Bundle();
         ActivityChangeIntentDataModel dataModel = new ActivityChangeIntentDataModel(fragment);
         bundle.putSerializable("data",dataModel);
+//        bundle.putString("url",url);
         intent.putExtras(bundle);
         activity.startActivity(intent);
+    }
+
+//    public static void subMainActivityIntent(Activity activity, Fragment fragment, String searchWord){
+//        Intent intent = new Intent(activity, SubMainActivity.class);
+//        Bundle bundle = new Bundle();
+//        ActivityChangeIntentDataModel dataModel = new ActivityChangeIntentDataModel(fragment);
+//        bundle.putSerializable("data",dataModel);
+//        bundle.putString("search_word",searchWord);
+//        intent.putExtras(bundle);
+//        activity.startActivity(intent);
+//    }
+
+    public static JSONArray getJsonArrayByJsonObject(JSONObject json,String name){
+        JSONArray jsonArray = null;
+        try {
+            jsonArray = json.getJSONArray(name);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return jsonArray;
+    }
+
+    public static String getStringByJsonObject(JSONObject json , String name){
+        String str = "";
+        try {
+            str = json.getString(name);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return str;
+    }
+
+    public static JSONObject getJsonObjectByJsonArray(JSONArray jsonArray , int idx){
+        JSONObject jsonObject = null;
+        try {
+            jsonObject = jsonArray.getJSONObject(idx);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return jsonObject;
     }
 }

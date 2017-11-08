@@ -16,22 +16,21 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CompoundButton;
 import android.widget.Toast;
 
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
-import com.thebay.thebay1.login.LoginActivity;
 import com.thebay.thebay1.R;
 import com.thebay.thebay1.common.CommonLib;
-import com.thebay.thebay1.databinding.FragmentRequestsBinding;
+import com.thebay.thebay1.databinding.FragmentRequestBinding;
 import com.thebay.thebay1.databinding.ListItemHomeBinding;
 import com.thebay.thebay1.dto.KeyDTO;
-import com.thebay.thebay1.event.AddDataEvent;
 import com.thebay.thebay1.event.MessageEvent;
-import com.thebay.thebay1.event.ScrollButtonClickEvent;
-import com.thebay.thebay1.main.ScanInStockModel;
 import com.thebay.thebay1.frag_my_home.homeModel;
 import com.thebay.thebay1.lib.TheBayRestClient;
+import com.thebay.thebay1.login.LoginActivity;
+import com.thebay.thebay1.main.ScanInStockModel;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -46,9 +45,9 @@ import java.util.Map;
 
 import cz.msebera.android.httpclient.Header;
 
-public class RequestsFragment extends Fragment {
+public class RequestsFragment extends Fragment implements CompoundButton.OnCheckedChangeListener {
 
-    private FragmentRequestsBinding binding;
+    private FragmentRequestBinding binding;
 
     //스크롤 방향 체크 변수
     public static RequestsFragment newInstance() {
@@ -66,8 +65,10 @@ public class RequestsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_requests, container, false);
+        View view = inflater.inflate(R.layout.fragment_request, container, false);
         binding = DataBindingUtil.bind(view);
+        binding.recieverCheck.setOnCheckedChangeListener(this);
+        binding.buyerCheck.setOnCheckedChangeListener(this);
 
         return view;
     }
@@ -88,15 +89,15 @@ public class RequestsFragment extends Fragment {
             params.put("MemCode", keyInfo.getMemberCode());
         }
         // TODO: 2017-10-19 page name 수정
-        params.put("PageNm", "배송대행 신청> 요청사항");
+        params.put("PageNm", "배송대행 신청 > 등록");
         params.put("AppVer", Build.MODEL);
         params.put("ModelNo", Build.VERSION.RELEASE);
 
-        try {
-            getHttp("Acting/ReqSvc_S.php", params);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+//        try {
+//            getHttp("Acting/ReqSvc_S.php", params);
+//        } catch (JSONException e) {
+//            e.printStackTrace();
+//        }
 
 //        RequestParams params = new RequestParams();
 //
@@ -210,10 +211,10 @@ public class RequestsFragment extends Fragment {
                     String error = response.getString("RstNo");
                     if (error.equals("0")) {
                         JSONArray array = response.getJSONArray("MemInf");
-                        Log.d("onHomeSuccess: ",array.toString());
+                        Log.d("onHomeSuccess: ", array.toString());
                         for (int i = 0; i < array.length(); i++) {
                             JSONObject object = array.getJSONObject(i);
-                            Log.d("onHomeSuccess: ",object.getString("MemKrNm").toString());
+                            Log.d("onHomeSuccess: ", object.getString("MemKrNm").toString());
 //                            homeModelList.add(new homeModel(object.getString("MemNmKr"), object.getString("MemLvl"),
 //                                    object.getString("MemLvlNm"), object.getString("MyPost"), object.getString("MyDpst"),
 //                                    object.getString("PaymentCnt"), object.getString("PaymentMny"), object.getString("NtCnt")));
@@ -221,7 +222,7 @@ public class RequestsFragment extends Fragment {
 //
 //                            binding.messageCountText.setText(object.getString("NtCnt"));
                         }
-                        binding.parentLayout.setVisibility(View.VISIBLE);
+//                        binding.parentLayout.setVisibility(View.VISIBLE);
                     } else {
                         Toast.makeText(getContext(), "로그인 정보가 틀립니다.", Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(getActivity(), LoginActivity.class));
@@ -278,17 +279,18 @@ public class RequestsFragment extends Fragment {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onMessageEvent(MessageEvent event) {
-        if (event instanceof AddDataEvent) {
-            //서버 통신시 프로그래스바
 
-            //서버 통신하고 값이 20개이상이면 버튼 보이게
-            //20개 미만이면 버튼 안보이게
+//        if (event instanceof AddDataEvent) {
+        //서버 통신시 프로그래스바
+
+        //서버 통신하고 값이 20개이상이면 버튼 보이게
+        //20개 미만이면 버튼 안보이게
 //            for (int i = 0; i < 10; i++) {
 //                mDataList.add(new ScanInStockModel("" + i, "1", "1", "1", "1", "1"));
 //            }
 //            mDataAdapter.setData(mDataList);
 //            RecyclerViewUtils.removeFooterView(mRecyclerView);
-        } else if (event instanceof ScrollButtonClickEvent) {
+//        } else if (event instanceof ScrollButtonClickEvent) {
 //            binding.recyclerView.smoothScrollToPosition(0);
 //        } else if (event instanceof SearchEvent) {
 //            SearchEvent searchEvent = (SearchEvent) event;
@@ -310,6 +312,22 @@ public class RequestsFragment extends Fragment {
 //            RecyclerViewUtils.setHeaderView(mRecyclerView, new TrackingSearchHeader(getContext()));
 //        } else if (event instanceof ListHeaderFocusEvent) {
 //            mRecyclerView.smoothScrollToPosition(0);
+//        }
+    }
+
+    @Override
+    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+        switch (buttonView.getId()) {
+            case R.id.buyer_check:
+                if (isChecked){
+                    binding.recieverCheck.setChecked(false);
+                }
+                break;
+            case R.id.reciever_check:
+                if (isChecked){
+                    binding.buyerCheck.setChecked(false);
+                }
+                break;
         }
     }
 

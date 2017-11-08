@@ -50,9 +50,8 @@ public class LoginActivity extends ParentActivity implements View.OnClickListene
 
 //        setSupportActionBar(binding.toolbar);
 
-        binding.loginButton.setOnClickListener(this);
+        binding.confirmButton.setOnClickListener(this);
         binding.signUpButton.setOnClickListener(this);
-        binding.infoSearchButton.setOnClickListener(this);
 
         mPref = PreferenceManager.getDefaultSharedPreferences(this);
         mEditor = mPref.edit();
@@ -121,10 +120,6 @@ public class LoginActivity extends ParentActivity implements View.OnClickListene
     public void onClick(View v) {
         switch (v.getId()) {
 
-            case R.id.info_search_button:
-
-                break;
-
             case R.id.sign_up_button:
                 startActivity(new Intent(this, SignUpActivity.class));
                 break;
@@ -182,5 +177,19 @@ public class LoginActivity extends ParentActivity implements View.OnClickListene
         nullLayout.setError(errorMessage);
         layout.setError(null);
         layout.setErrorEnabled(false);
+    }
+
+    @Override
+    public void onBackPressed() {
+        long tempTime = System.currentTimeMillis();
+        long intervalTime = tempTime - backPressedTime;
+
+        if (0 <= intervalTime && FINISH_INTERVAL_TIME >= intervalTime) {
+            super.onBackPressed();
+        } else {
+            backPressedTime = tempTime;
+            Toast.makeText(getApplicationContext(), "'뒤로' 버튼을 한번 더 누르시면 종료됩니다.", Toast.LENGTH_SHORT).show();
+        }
+
     }
 }

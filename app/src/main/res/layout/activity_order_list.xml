@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#ffffff"
+        android:orientation="vertical"
+        tools:context="com.thebay_taobao.thebay1.SubActivity">
+
+
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <android.support.design.widget.AppBarLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <android.support.v7.widget.Toolbar
+                    android:id="@+id/toolbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+                    app:titleTextAppearance="@style/Toolbar.Sub" />
+
+                <!--<FrameLayout-->
+                <!--android:id="@+id/add_item_layout"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"></FrameLayout>-->
+            </android.support.design.widget.AppBarLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        <Button
+            style="@style/medium_list_text_style"
+            android:textStyle="bold"
+            android:textColor="@color/white"
+            android:text="결제완료"
+            android:background="@color/green"
+            android:id="@+id/send_button"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="40dp" />
+
+            <Button
+                style="@style/medium_list_text_style"
+                android:textStyle="bold"
+                android:textColor="@color/white"
+                android:background="@color/yellow"
+                android:text="배송중"
+                android:id="@+id/confirm_button"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="40dp" />
+    </LinearLayout>
+            <FrameLayout
+                android:id="@+id/parent_layout"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1">
+
+                <!--<WebView-->
+                    <!--android:id="@+id/show_web_view"-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="match_parent"></WebView>-->
+
+                <WebView
+                    android:id="@+id/work_web_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"></WebView>
+
+
+            </FrameLayout>
+        <!--<WebView-->
+            <!--android:id="@+id/work_web_view"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="0dp"-->
+            <!--android:layout_weight="1"></WebView>-->
+
+        <Button
+            style="@style/medium_list_text_style"
+            android:textStyle="bold"
+            android:textColor="@color/white"
+            android:background="@color/red"
+            android:text="오더내역 가져오기"
+            android:id="@+id/get_order_history_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+
+            <!--<Button-->
+            <!--android:id="@+id/order_history_button"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent" />-->
+
+            <!--<LinearLayout-->
+                <!--android:id="@+id/bottom_sheet"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_gravity="bottom"-->
+                <!--android:background="#EEE"-->
+                <!--android:orientation="vertical"-->
+                <!--android:paddingLeft="@dimen/default_padding"-->
+                <!--android:paddingRight="@dimen/default_padding"-->
+                <!--app:behavior_hideable="true"-->
+                <!--app:behavior_peekHeight="30dp"-->
+                <!--app:layout_behavior="@string/bottom_sheet_behavior">-->
+
+                <!--<ImageView-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="10dp"-->
+                    <!--android:layout_gravity="center"-->
+                    <!--android:src="@drawable/ic_up" />-->
+
+                <!--<TextView-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="20dp"-->
+                    <!--android:layout_gravity="center"-->
+                    <!--android:layout_marginBottom="5dp"-->
+                    <!--android:gravity="center"-->
+                    <!--android:text="가져오고 싶은 주문 내역을 선택하세요."-->
+                    <!--android:textColor="@color/gray"-->
+                    <!--android:textSize="@dimen/medium_text_size"-->
+                    <!--android:textStyle="bold" />-->
+
+                <!--<TextView-->
+                    <!--style="@style/small_list_text_style"-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:text="- 3번째 탭이 결제 완료, 4번째 탭이 배송중 입니다." />-->
+
+                <!--<CheckBox-->
+                    <!--android:id="@+id/payment_checkbox"-->
+                    <!--style="@style/medium_list_text_style"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:scaleX="0.8"-->
+                    <!--android:scaleY="0.8"-->
+                    <!--android:text="결제 완료" />-->
+
+                <!--<CheckBox-->
+                    <!--android:id="@+id/shipping_checkbox"-->
+                    <!--style="@style/medium_list_text_style"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:scaleX="0.8"-->
+                    <!--android:scaleY="0.8"-->
+                    <!--android:text="배송중" />-->
+
+                <!--<Button-->
+                    <!--style="@style/medium_list_text_style"-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="35dp"-->
+                    <!--android:layout_marginBottom="@dimen/default_padding"-->
+                    <!--android:background="@color/colorPrimary"-->
+                    <!--android:text="주문 내역 가져오기"-->
+                    <!--android:textColor="@color/white"-->
+                    <!--android:textStyle="bold" />-->
+
+            <!--</LinearLayout>-->
+        <!--</android.support.design.widget.CoordinatorLayout>-->
+
+</LinearLayout>
+
+        <FrameLayout
+            android:visibility="gone"
+            android:background="#27000000"
+            android:id="@+id/progress_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+        <ProgressBar
+            android:id="@+id/progress_bar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            />
+        </FrameLayout>
+    </FrameLayout>
+</layout>

@@ -17,9 +17,5 @@
         id="@+id/tab_favorites4"
         icon="@drawable/ic_android"
         title="Favorites" />
-    <tab
-        id="@+id/tab_favorites5"
-        icon="@drawable/ic_android"
-        title="Nearby" />
 
 </tabs>

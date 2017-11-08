@@ -1,6 +1,5 @@
 package com.thebay.thebay1;
 
-import android.Manifest;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -17,8 +16,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
-import com.gun0912.tedpermission.PermissionListener;
-import com.gun0912.tedpermission.TedPermission;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 import com.thebay.thebay1.common.CommonLib;
@@ -31,8 +28,6 @@ import com.thebay.thebay1.sign_up.SignUpActivity;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.util.ArrayList;
 
 import cz.msebera.android.httpclient.Header;
 
@@ -121,27 +116,27 @@ public class SplashActivity extends ParentActivity implements View.OnClickListen
         alert.show();
     }
 
-    public void permissionSetting() {
-
-        PermissionListener permissionlistener = new PermissionListener() {
-            @Override
-            public void onPermissionGranted() {
-                idCheck();
-            }
-
-            @Override
-            public void onPermissionDenied(ArrayList<String> deniedPermissions) {
-                Toast.makeText(SplashActivity.this, "권한을 거부하시면 해당 서비스를 사용할 수 없습니다.", Toast.LENGTH_SHORT).show();
-                finish();
-            }
-        };
-
-        new TedPermission(this)
-                .setPermissionListener(permissionlistener)
-                .setDeniedMessage("사용 권한을 거부하는 경우 이 서비스를 사용할 수 없습니다.\n\n사용 권한을 설정하십시오.[설정] > [사용 권한]")
-                .setPermissions(Manifest.permission.READ_PHONE_STATE)
-                .check();
-    }
+//    public void permissionSetting() {
+//
+//        PermissionListener permissionlistener = new PermissionListener() {
+//            @Override
+//            public void onPermissionGranted() {
+//                idCheck();
+//            }
+//
+//            @Override
+//            public void onPermissionDenied(ArrayList<String> deniedPermissions) {
+//                Toast.makeText(SplashActivity.this, "권한을 거부하시면 해당 서비스를 사용할 수 없습니다.", Toast.LENGTH_SHORT).show();
+//                finish();
+//            }
+//        };
+//
+//        new TedPermission(this)
+//                .setPermissionListener(permissionlistener)
+//                .setDeniedMessage("사용 권한을 거부하는 경우 이 서비스를 사용할 수 없습니다.\n\n사용 권한을 설정하십시오.[설정] > [사용 권한]")
+//                .setPermissions(Manifest.permission.READ_PHONE_STATE)
+//                .check();
+//    }
 
     public void idCheck() {
 
@@ -263,6 +258,7 @@ public class SplashActivity extends ParentActivity implements View.OnClickListen
                 finish();
                 break;
             case R.id.sign_up_button:
+                startActivity(new Intent(getApplicationContext(), LoginActivity.class));
                 startActivity(new Intent(getApplicationContext(), SignUpActivity.class));
                 finish();
                 break;

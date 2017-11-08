@@ -8,18 +8,19 @@
     <!--<uses-permission android:name="android.permission.READ_CONTACTS" />-->
 
     <application
-        android:screenOrientation="portrait"
+        android:name=".CustomStartApp"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
+        android:screenOrientation="portrait"
+        android:windowSoftInputMode="adjustResize|adjustPan"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme"
-        android:name=".CustomStartApp">
+        android:theme="@style/AppTheme">
         <activity android:name=".MainActivity">
 
         </activity>
-        <activity android:name=".ParentActivity"/>
+        <activity android:name=".ParentActivity" />
         <activity android:name=".SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -27,10 +28,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".login.LoginActivity"/>
-        <activity android:name=".ShippingActivity"/>
-        <activity android:name=".SubActivity"/>
-        <activity android:name=".sign_up.SignUpActivity"/>
+        <activity android:name=".login.LoginActivity" />
+        <activity android:name=".ShippingActivity" />
+        <activity android:name=".SubActivity" />
+        <activity android:name=".sign_up.SignUpActivity" />
+        <activity android:name=".taobao_purchase.PurchaseActivity" />
+        <activity android:name=".OrderListActivity"/>
+        <activity android:name=".WebViewActivity"/>
+
     </application>
 
 </manifest>

@@ -83,7 +83,6 @@
 
         <CheckBox
             android:id="@+id/checkbox1"
-            app:buttonTint="@color/white"
             android:textSize="@dimen/small_text_size"
             android:textColor="@color/white"
             style="@style/CheckBoxStyle"
@@ -93,7 +92,6 @@
 
         <CheckBox
             android:id="@+id/checkbox2"
-            app:buttonTint="@color/white"
             android:textSize="@dimen/small_text_size"
             style="@style/CheckBoxStyle"
             android:textColor="@color/white"

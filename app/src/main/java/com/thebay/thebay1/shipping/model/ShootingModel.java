@@ -1,6 +1,5 @@
 package com.thebay.thebay1.shipping.model;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
@@ -13,6 +12,7 @@ public class ShootingModel {
     private String buyer;  //구매자
     private String category;  //품목 카테고리
     //상품명 빠짐 넣어야됨
+    private String productName;
     private String trackingNumber;  //트래킹번호
     private boolean isTrackingNumberNotEntered;  //트래킹번호 나중에 입력 체크박스
     private String price;  //금액
@@ -23,13 +23,13 @@ public class ShootingModel {
     private String imageUrl;  //이미지 url
     private String bringImage; //핸드폰 이미지 등록
     private HashMap<Integer, String> newImageFileMap;
-    private ArrayList<String> existingImageFileList;
 
-    public ShootingModel(String shoppingMall, String orderNumber, String buyer, String category, String trackingNumber, boolean isTrackingNumberNotEntered, String price, String quantity, String color, String size, String goodsUrl, String imageUrl, String bringImage, HashMap<Integer, String> newImageFileMap, ArrayList<String> existingImageFileList) {
+    public ShootingModel(String shoppingMall, String orderNumber, String buyer, String category, String productName, String trackingNumber, boolean isTrackingNumberNotEntered, String price, String quantity, String color, String size, String goodsUrl, String imageUrl, String bringImage, HashMap<Integer, String> newImageFileMap) {
         this.shoppingMall = shoppingMall;
         this.orderNumber = orderNumber;
         this.buyer = buyer;
         this.category = category;
+        this.productName = productName;
         this.trackingNumber = trackingNumber;
         this.isTrackingNumberNotEntered = isTrackingNumberNotEntered;
         this.price = price;
@@ -40,7 +40,6 @@ public class ShootingModel {
         this.imageUrl = imageUrl;
         this.bringImage = bringImage;
         this.newImageFileMap = newImageFileMap;
-        this.existingImageFileList = existingImageFileList;
     }
 
     public String getShoppingMall() {
@@ -73,6 +72,14 @@ public class ShootingModel {
 
     public void setCategory(String category) {
         this.category = category;
+    }
+
+    public String getProductName() {
+        return productName;
+    }
+
+    public void setProductName(String productName) {
+        this.productName = productName;
     }
 
     public String getTrackingNumber() {
@@ -155,14 +162,6 @@ public class ShootingModel {
         this.newImageFileMap = newImageFileMap;
     }
 
-    public ArrayList<String> getExistingImageFileList() {
-        return existingImageFileList;
-    }
-
-    public void setExistingImageFileList(ArrayList<String> existingImageFileList) {
-        this.existingImageFileList = existingImageFileList;
-    }
-
     @Override
     public String toString() {
         return "ShootingModel{" +
@@ -170,6 +169,7 @@ public class ShootingModel {
                 ", orderNumber='" + orderNumber + '\'' +
                 ", buyer='" + buyer + '\'' +
                 ", category='" + category + '\'' +
+                ", productName='" + productName + '\'' +
                 ", trackingNumber='" + trackingNumber + '\'' +
                 ", isTrackingNumberNotEntered=" + isTrackingNumberNotEntered +
                 ", price='" + price + '\'' +
@@ -180,7 +180,6 @@ public class ShootingModel {
                 ", imageUrl='" + imageUrl + '\'' +
                 ", bringImage='" + bringImage + '\'' +
                 ", newImageFileMap=" + newImageFileMap +
-                ", existingImageFileList=" + existingImageFileList +
                 '}';
     }
 }

@@ -4,14 +4,14 @@ package com.thebay.thebay1.shipping.model;
  * Created by kyoungae on 2017-10-20.
  */
 
-public class AcceptTermsModel {
+public class ShippingCenterModel {
     private String CtrSeq;
     private String CtrCd;
     private String CtrNm;
     private String CtrNmCn;
     private String Addr;
 
-    public AcceptTermsModel(String ctrSeq, String ctrCd, String ctrNm, String ctrNmCn, String addr) {
+    public ShippingCenterModel(String ctrSeq, String ctrCd, String ctrNm, String ctrNmCn, String addr) {
         CtrSeq = ctrSeq;
         CtrCd = ctrCd;
         CtrNm = ctrNm;
@@ -52,7 +52,9 @@ public class AcceptTermsModel {
     }
 
     public String getAddr() {
-        return Addr;
+        String[] addSplit1 = Addr.split(", ");
+        String[] addSplit2 = addSplit1[2].split(" ");
+        return addSplit1[0] + "\n" + addSplit1[1]+ ", " + addSplit2[0] + "\nTEL : " + addSplit2[1];
     }
 
     public void setAddr(String addr) {

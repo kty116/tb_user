@@ -9,7 +9,7 @@ import com.loopj.android.http.RequestParams;
  */
 
 public class TheBayRestClient {
-    private static final String BASE_URL = "http://oldapp.yingai.co.kr/";
+    private static final String BASE_URL = "http://oldapp.thebay.co.kr/";
     private static AsyncHttpClient client = new AsyncHttpClient();
 
     public static void get(String url, RequestParams params, AsyncHttpResponseHandler responseHandler) {

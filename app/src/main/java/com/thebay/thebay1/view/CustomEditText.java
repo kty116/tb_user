@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.text.InputFilter;
 import android.text.Spanned;
+import android.text.TextUtils;
+import android.text.method.PasswordTransformationMethod;
 import android.util.AttributeSet;
 
 import com.thebay.thebay1.R;
@@ -20,19 +22,23 @@ import static android.text.InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD;
 
 public class CustomEditText extends android.support.v7.widget.AppCompatEditText {
     private TypedArray typedArray;
+    private Context context;
 
     public CustomEditText(Context context) {
         super(context);
+
     }
 
     public CustomEditText(Context context, AttributeSet attrs) {
         super(context, attrs);
         initView(context,attrs);
+        this.context = context;
     }
 
     public CustomEditText(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         initView(context,attrs);
+        this.context = context;
     }
 
 
@@ -72,15 +78,67 @@ public class CustomEditText extends android.support.v7.widget.AppCompatEditText 
 
             case 2:
                 setFilters(new InputFilter[]{hangulFilter});
+                setPrivateImeOptions("defaultInputmode=korean;");
                 break;
             case 3:
                 setInputType(TYPE_CLASS_TEXT | TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+                setTransformationMethod(PasswordTransformationMethod.getInstance());
                 break;
             case 4:
                 setInputType(TYPE_CLASS_TEXT | TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
                 setFilters(new InputFilter[]{englishFilter});
                 break;
+            case 5 :
+                setFilters(new InputFilter[]{englishAndNumberAndhangulFilter});
         }
+    }
+
+    /**
+     * 값이 비어있는지 확인하고 비었으면 null
+     * 값이 있으면 getText 값 보냄
+     * @return null or getText
+     */
+    public String emptyCheck(){
+        if(TextUtils.isEmpty(getText())){
+            return null;  //비어있으면 널 보냄
+        }else {
+
+            return getText().toString();
+            //값 있으면
+
+//            switch (getHint().toString()){
+//                case "아이디":
+//                    if (length() < 5 || length() > 20) {
+//                        Toast.makeText(context, "아이디는 5 ~ 20자로만 가능합니다", Toast.LENGTH_SHORT).show();
+//                    }
+//                    break;
+//                case "비밀번호":
+//                    if (length() < 6 || length() > 20) {
+//                        Toast.makeText(context, "비밀번호는 6 ~ 20자로만 가능합니다", Toast.LENGTH_SHORT).show();
+//                    }
+//                    break;
+//                case "비밀번호 확인":
+//                    if (!password1.equals(password2)) {
+//                        Toast.makeText(context, "비밀번호 재입력 값이 다릅니다.", Toast.LENGTH_SHORT).show();
+//                    }
+//                    break;
+//                case "닉네임":
+//                    if (length() < 6 || length() > 20) {
+//                        Toast.makeText(context, "비밀번호는 6 ~ 20자로만 가능합니다", Toast.LENGTH_SHORT).show();
+//                    }
+//                    break;
+//                case "비밀번호":
+//                    if (length() < 6 || length() > 20) {
+//                        Toast.makeText(context, "비밀번호는 6 ~ 20자로만 가능합니다", Toast.LENGTH_SHORT).show();
+//                    }
+//                    break;
+//
+//            }
+        }
+    }
+
+    public String getName(){
+        return getHint().toString();
     }
 
     //영어랑 숫자만 허용
@@ -99,7 +157,7 @@ public class CustomEditText extends android.support.v7.widget.AppCompatEditText 
         public CharSequence filter(CharSequence source, int start, int end, Spanned dest, int dstart, int dend) {
             Pattern ps = Pattern.compile("^[a-zA-Z]+$");
             if (!ps.matcher(source).matches()) {
-                return "";
+                return "";  //영어 일때 , 숫자일때
             }
             return null;
         }
@@ -126,6 +184,20 @@ public class CustomEditText extends android.support.v7.widget.AppCompatEditText 
             return null;
         }
     };
+
+    //영어 숫자 한글만 허용
+    public InputFilter englishAndNumberAndhangulFilter = new InputFilter() {
+        public CharSequence filter(CharSequence source, int start, int end, Spanned dest, int dstart, int dend) {
+            Pattern ps = Pattern.compile("^[a-zA-Z0-9ㄱ-가-힣]+$");
+            if (!ps.matcher(source).matches()) {
+                return "";
+            }
+            return null;
+        }
+    };
+
+
+
 //
 //    private String getChangeLanguage() {
 //        return mLanguageValue;

@@ -9,6 +9,7 @@ import android.view.View;
 import com.thebay.thebay1.databinding.ActivitySubBinding;
 import com.thebay.thebay1.event.MessageEvent;
 import com.thebay.thebay1.event.ProgressBarEvent;
+import com.thebay.thebay1.event.WebviewUrlEvent;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -17,6 +18,8 @@ import org.greenrobot.eventbus.ThreadMode;
 public class SubActivity extends ParentActivity {
 
     private ActivitySubBinding binding;
+    private int mCurrentToolbar;
+    private View mToolbarView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,9 +32,10 @@ public class SubActivity extends ParentActivity {
         Intent intent = getIntent();
         if (getIntent().getSerializableExtra("data") != null) {
 
-
             ActivityChangeIntentDataModel dataModel = (ActivityChangeIntentDataModel) intent.getSerializableExtra("data");
+
             getSupportFragmentManager().beginTransaction().add(R.id.fragment_layout, dataModel.getFragment()).commit();
+
         }
     }
 
@@ -59,15 +63,15 @@ public class SubActivity extends ParentActivity {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onMessageEvent(MessageEvent event) {
-    if (event instanceof ProgressBarEvent){
-        ProgressBarEvent progressBarEvent = (ProgressBarEvent) event;
-        boolean progressbarShown = progressBarEvent.isShow();
-        if(progressbarShown){
-            binding.progressBar.setVisibility(View.VISIBLE);
-        }else {
-            binding.progressBar.setVisibility(View.GONE);
+        if (event instanceof ProgressBarEvent) {
+            ProgressBarEvent progressBarEvent = (ProgressBarEvent) event;
+            boolean progressbarShown = progressBarEvent.isShow();
+            if (progressbarShown) {
+                binding.progressBar.setVisibility(View.VISIBLE);
+            } else {
+                binding.progressBar.setVisibility(View.GONE);
+            }
         }
-    }
 //        if (event instanceof FragmentReplaceEvent) {
 //            FragmentReplaceEvent fragmentReplaceEvent = (FragmentReplaceEvent) event;
 //            if (fragmentReplaceEvent.isToolbarHide()) {
@@ -89,6 +93,10 @@ public class SubActivity extends ParentActivity {
     public void onStart() {
         super.onStart();
         EventBus.getDefault().register(this);
+        String url = getIntent().getStringExtra("url");
+        if (url != null) {
+            EventBus.getDefault().post(new WebviewUrlEvent(url));
+        }
     }
 
     @Override

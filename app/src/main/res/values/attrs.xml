@@ -16,6 +16,7 @@
             <enum name="hangul_only" value="2" />
             <enum name="password" value="3" />
             <enum name="english_only" value="4" />
+            <enum name="english_and_numbers_hangul_only" value="5" />
         </attr>
         <!--<attr name="hint" format="string" />-->
         <!--<attr name="language_korean" format="string"/>-->

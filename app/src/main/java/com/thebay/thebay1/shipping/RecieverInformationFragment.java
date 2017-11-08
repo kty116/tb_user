@@ -2,51 +2,37 @@ package com.thebay.thebay1.shipping;
 
 
 import android.content.Context;
-import android.content.Intent;
 import android.databinding.DataBindingUtil;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
-import com.loopj.android.http.JsonHttpResponseHandler;
-import com.loopj.android.http.RequestParams;
-import com.thebay.thebay1.login.LoginActivity;
 import com.thebay.thebay1.R;
-import com.thebay.thebay1.common.CommonLib;
 import com.thebay.thebay1.databinding.FragmentRecieverInformationBinding;
 import com.thebay.thebay1.databinding.ListItemHomeBinding;
-import com.thebay.thebay1.dto.KeyDTO;
-import com.thebay.thebay1.event.AddDataEvent;
+import com.thebay.thebay1.event.GetSaveAddressEvent;
 import com.thebay.thebay1.event.MessageEvent;
-import com.thebay.thebay1.event.ScrollButtonClickEvent;
+import com.thebay.thebay1.event.ShippingNextButtonEvent;
+import com.thebay.thebay1.event.SignUpSelectedAddressEvent;
 import com.thebay.thebay1.main.ScanInStockModel;
-import com.thebay.thebay1.lib.TheBayRestClient;
-import com.thebay.thebay1.shipping.dialog.GetAddressFragmentDialog;
-import com.thebay.thebay1.shipping.model.AcceptTermsModel;
+import com.thebay.thebay1.shipping.dialog.GetAddressDialogFragment;
+import com.thebay.thebay1.webview.WebviewDialogFragment;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-
-import cz.msebera.android.httpclient.Header;
 
 public class RecieverInformationFragment extends Fragment implements View.OnClickListener {
 
@@ -71,6 +57,10 @@ public class RecieverInformationFragment extends Fragment implements View.OnClic
         View view = inflater.inflate(R.layout.fragment_reciever_information, container, false);
         binding = DataBindingUtil.bind(view);
 
+        binding.postSearchButton.setOnClickListener(this);
+        binding.nextButton.setOnClickListener(this);
+        binding.getOrderListButton.setOnClickListener(this);
+
         return view;
     }
 
@@ -78,29 +68,8 @@ public class RecieverInformationFragment extends Fragment implements View.OnClic
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        RequestParams params = new RequestParams();
 
-//        String enId = Security.encrypt(id,"EJQPDL@)!&!))DJR").toString();
-//        String enPw = Security.encrypt(password,"EJQPDL@)!&!))DJR").toString();
-//        String enTp = Security.encrypt("U","EJQPDL@)!&!))DJR").toString();
-        KeyDTO keyInfo = CommonLib.getKeyInfo(getContext());
-
-        if (keyInfo != null) {
-            params.put("AuthKey", keyInfo.getAuthKey());
-            params.put("MemCode", keyInfo.getMemberCode());
-        }
-        // TODO: 2017-10-19 page name 수정
-        params.put("PageNm", "배송대행 신청> 수취인정보");
-        params.put("AppVer", Build.MODEL);
-        params.put("ModelNo", Build.VERSION.RELEASE);
-
-        try {
-            getHttp("Acting/DlvrAddr_S.php", params);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
-        binding.getAddressButton.setOnClickListener(this);
+//        binding.getAddressButton.setOnClickListener(this);
 
 //        RequestParams params = new RequestParams();
 //
@@ -190,83 +159,23 @@ public class RecieverInformationFragment extends Fragment implements View.OnClic
         EventBus.getDefault().unregister(this);
     }
 
-    public void getHttp(String relativeUrl, RequestParams params) throws JSONException {
-
-        TheBayRestClient.post(relativeUrl, params, new JsonHttpResponseHandler() {
-
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                // 받아온 JSONObject 자료 처리
-
-                Log.d("onAcceptSuccess: ", response.toString());
-
-                // TODO: 2017-10-19 데이터 받은거 수정
-
-                ArrayList<AcceptTermsModel> acceptTermsList = new ArrayList<>();
-
-                try {
-                    String error = response.getString("RstNo");
-                    if (error.equals("0")) {
-                        JSONArray array = response.getJSONArray("Center");
-                        Log.d("onAcceptSuccess: ", array.toString());
-                        for (int i = 0; i < array.length(); i++) {
-                            JSONObject object = array.getJSONObject(i);
-                            Log.d("onAcceptSuccess: ", object.getString("CtrSeq").toString());
-                            acceptTermsList.add(new AcceptTermsModel(object.getString("CtrSeq"), object.getString("CtrCd"),
-                                    object.getString("CtrNm"), object.getString("CtrNmCn"), object.getString("Addr")));
-//                            binding.setText(acceptTermsList.toString());
-                        }
-                        binding.parentLayout.setVisibility(View.VISIBLE);
-                    } else {
-                        Toast.makeText(getContext(), "로그인 정보가 틀립니다.", Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(getActivity(), LoginActivity.class));
-                        getActivity().finish();
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
-
-//                Log.d("onHomeSuccess: ", response.toString());
-                // 받아온 JSONArray 자료 처리
-
-//                try {
-//                    JSONObject object = null;
-//                    for (int i = 0; i < response.length(); i++) {
-//                        object = response.getJSONObject(i);
-//                    }
-//                    String error = object.getString("RstNo");
-//                    Log.d("onSuccess: ",response.toString());
-//
-//                    if (error.equals("0")) {
-//                        Toast.makeText(getContext(), "성공", Toast.LENGTH_SHORT).show();
-////                        LoginActivity.mMemCode= object.getString("MemCode");
-////                        mAuthKey = object.getString("AuthKey");
-////                        getKeyInfo();
-//
-//                    }else {
-//                        Toast.makeText(getContext(), "실패", Toast.LENGTH_SHORT).show();
-//                    }
-//                    Log.d("onSuccess: ", response.getString(0).toString());
-//                } catch(JSONException e) {
-//                }
-            }
-
-            @Override
-            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
-                // 통신 실패시 호출 되는 메소드
-                Toast.makeText(getContext(), "서버와 통신에 실패했습니다.", Toast.LENGTH_SHORT).show();
-                Log.d("onFailure: ", throwable.toString());
-            }
-        });
-    }
-
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onMessageEvent(MessageEvent event) {
-        if (event instanceof AddDataEvent) {
+        if (event instanceof SignUpSelectedAddressEvent) {
+            SignUpSelectedAddressEvent signUpSelectedAddressEvent = (SignUpSelectedAddressEvent) event;
+            binding.postEdit.setText(signUpSelectedAddressEvent.getPost());
+            binding.addressEdit.setText(signUpSelectedAddressEvent.getAddress());
+        }else if (event instanceof GetSaveAddressEvent) {
+            GetSaveAddressEvent getSaveAddressEvent = (GetSaveAddressEvent) event;
+            // TODO: 2017-11-07 이벤트 변수값에 넣어서 setText해주기
+//            binding.recieverNameEdit.setText(getSaveAddressEvent);
+//            binding.customsClearanceEdit.setText(getSaveAddressEvent);
+//            binding.phoneEdit.setText(getSaveAddressEvent);
+//            binding.postEdit.setText(getSaveAddressEvent);
+//            binding.addressEdit.setText(getSaveAddressEvent);
+//            binding.detailAddressEdit.setText(getSaveAddressEvent);
+        }
+//        if (event instanceof AddDataEvent) {
             //서버 통신시 프로그래스바
 
             //서버 통신하고 값이 20개이상이면 버튼 보이게
@@ -276,7 +185,7 @@ public class RecieverInformationFragment extends Fragment implements View.OnClic
 //            }
 //            mDataAdapter.setData(mDataList);
 //            RecyclerViewUtils.removeFooterView(mRecyclerView);
-        } else if (event instanceof ScrollButtonClickEvent) {
+//        } else if (event instanceof ScrollButtonClickEvent) {
 //            binding.recyclerView.smoothScrollToPosition(0);
 //        } else if (event instanceof SearchEvent) {
 //            SearchEvent searchEvent = (SearchEvent) event;
@@ -298,16 +207,24 @@ public class RecieverInformationFragment extends Fragment implements View.OnClic
 //            RecyclerViewUtils.setHeaderView(mRecyclerView, new TrackingSearchHeader(getContext()));
 //        } else if (event instanceof ListHeaderFocusEvent) {
 //            mRecyclerView.smoothScrollToPosition(0);
-        }
+//        }
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-            case R.id.get_address_button:
-                FragmentManager fm = getActivity().getSupportFragmentManager();
-                GetAddressFragmentDialog dialogFragment = new GetAddressFragmentDialog();
-                dialogFragment.show(fm, "get_address");
+            case R.id.post_search_button:
+                FragmentManager fm1 = getActivity().getSupportFragmentManager();
+                WebviewDialogFragment dialogFragment1 = new WebviewDialogFragment();
+                dialogFragment1.show(fm1, "get_address");
+                break;
+            case R.id.get_order_list_button:
+                FragmentManager fm2 = getActivity().getSupportFragmentManager();
+                GetAddressDialogFragment dialogFragment2 = new GetAddressDialogFragment();
+                dialogFragment2.show(fm2, "get_addres");
+                break;
+            case R.id.next_button:
+                EventBus.getDefault().post(new ShippingNextButtonEvent());
                 break;
         }
     }

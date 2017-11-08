@@ -2,7 +2,6 @@ package com.thebay.thebay1;
 
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -10,12 +9,11 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 import com.thebay.thebay1.common.CommonLib;
@@ -26,6 +24,9 @@ import com.thebay.thebay1.login.LoginActivity;
 import com.thebay.thebay1.main.ButtonModel;
 import com.thebay.thebay1.main.NoticeFragment;
 import com.thebay.thebay1.main.noticeModel;
+import com.thebay.thebay1.my_page.MyPageFragment;
+import com.thebay.thebay1.shipping.TermsFragment;
+import com.thebay.thebay1.taobao_purchase.PurchaseActivity;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -46,16 +47,51 @@ public class MainActivity extends ParentActivity implements Serializable, View.O
     private ImageView[] mImageViews;
     private int[] mResourceImgs;
     private ArrayList<noticeModel> mNoticeList;
-    private boolean isMovePageThread = true;
+    private boolean isMovePageThread;
     private ArrayList<ButtonModel> mButtonImageList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main2);
-        setTitle("THE BAY");
 
+        setTitle("THE BAY");
         setSupportActionBar(binding.toolbar);
+        setMainData();
+
+    }
+
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//        getMenuInflater().inflate(R.menu.menu_home, menu);
+////        menu.findItem(R.id.action_language_change).setTitle(mLanguageValue);
+//        return super.onCreateOptionsMenu(menu);
+//    }
+//
+//    @Override
+//    public boolean onOptionsItemSelected(MenuItem item) {
+//        switch (item.getItemId()) {
+//            case R.id.action_setting:
+//
+//            default:
+//                return super.onOptionsItemSelected(item);
+//        }
+//    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        isMovePageThread = true;
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        isMovePageThread = false;
+    }
+
+    public void setMainData() {
+
+        mImageViews = new ImageView[]{binding.mainButton1, binding.mainButton2, binding.mainButton3, binding.mainButton4, binding.mainButton5, binding.mainButton6};
 
         RequestParams params = new RequestParams();
 
@@ -70,32 +106,12 @@ public class MainActivity extends ParentActivity implements Serializable, View.O
         params.put("ModelNo", Build.VERSION.RELEASE);
 
         try {
-            getHttp("Main.php", params);
+            getMainDataHttp("Main.php", params);
         } catch (JSONException e) {
             e.printStackTrace();
         }
-
-        mImageViews = new ImageView[]{binding.mainButton1, binding.mainButton2, binding.mainButton3, binding.mainButton4, binding.mainButton5, binding.mainButton6};
-//        addCustomImageInputView(R.layout.toolbar_main);
-//        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_layout, MainFragment.newInstance()).commit();
-
     }
 
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_home, menu);
-//        menu.findItem(R.id.action_language_change).setTitle(mLanguageValue);
-        return super.onCreateOptionsMenu(menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.action_setting:
-
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-    }
 
     @Override
     public void onClick(View v) {
@@ -110,29 +126,69 @@ public class MainActivity extends ParentActivity implements Serializable, View.O
         switch (v.getId()) {
 
             case R.id.main_button1:
+                rightPage(0);
 //                mClickId = 0;
 //                binding.mainButton1.setImageURI(Uri.parse(mButtonImageList.get(0).getImageUrl()));
-                startActivity(new Intent(this, ShippingActivity.class));
+//                startActivity(new Intent(this, ShippingActivity.class));
 //                getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_layout, TaobaoShoppingFragment.newInstance()).commit();
 //                getActivity().startActivity(new Intent(getActivity(), ShippingActivity.class));
                 break;
             case R.id.main_button2:
+                rightPage(1);
+//                startActivity(new Intent(this, SubMainActivity.class));
 
                 break;
             case R.id.main_button3:
+                rightPage(2);
+//                CommonLib.subMainActivityIntent(this, MyPageFragment.newInstance());
 
                 break;
             case R.id.main_button4:
-
+                rightPage(3);
                 break;
 
             case R.id.main_button5:
-
+                rightPage(4);
                 break;
             case R.id.main_button6:
-
+                rightPage(5);
                 break;
         }
+    }
+
+    public void rightPage(int buttonPosition) {
+
+        switch (mButtonImageList.get(buttonPosition).getPageName()) {
+            case "TaobaoWebview":
+                startActivity(new Intent(this, PurchaseActivity.class));
+                break;
+            case "Shipping":
+                CommonLib.subActivityIntent(this, TermsFragment.newInstance());
+                break;
+            case "Home":
+                CommonLib.subActivityIntent(this, MyPageFragment.newInstance());
+                break;
+            case "PayHistory":
+
+                break;
+            case "OrderHistory":
+
+                break;
+            case "Inquary":
+
+                break;
+            case "MessageBox":
+
+                break;
+            case "CouponHistory":
+
+                break;
+            case "Deposit":
+
+                break;
+
+        }
+
     }
 
     private void initViewPager() {
@@ -140,6 +196,8 @@ public class MainActivity extends ParentActivity implements Serializable, View.O
         binding.viewPager.setAdapter(pagerAdapter);
         binding.viewPager.setPageTransformer(false, new DefaultTransformer());
         binding.viewPager.setOverScrollMode(View.OVER_SCROLL_NEVER);
+
+        movePage();  //공지사항 움직이게
     }
 
     public class PagerAdapter extends FragmentStatePagerAdapter {
@@ -182,8 +240,6 @@ public class MainActivity extends ParentActivity implements Serializable, View.O
 
     public void movePage() {
         final Handler handler = new Handler();
-        //현재 위치
-//이동할 위치
         Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
@@ -213,7 +269,7 @@ public class MainActivity extends ParentActivity implements Serializable, View.O
         thread.start();
     }
 
-    public void getHttp(String relativeUrl, RequestParams params) throws JSONException {
+    public void getMainDataHttp(String relativeUrl, RequestParams params) throws JSONException {
 
         TheBayRestClient.post(relativeUrl, params, new JsonHttpResponseHandler() {
 
@@ -225,53 +281,40 @@ public class MainActivity extends ParentActivity implements Serializable, View.O
 
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                // 받아온 JSONObject 자료 처리
-
                 Log.d("onMainSuccess: ", response.toString());
 
                 mNoticeList = new ArrayList<>();
 
-//                TextView[] titleViews = {binding.title1, binding.title2, binding.title3, binding.title4};
-//                TextView[] dateViews = {binding.date1, binding.date2, binding.date3, binding.date4};
-
                 try {
                     String error = response.getString("RstNo");
-                    Log.d("onMainSuccess: ", error);
                     if (error.equals("0")) {
-                        JSONArray noticeArray = response.getJSONArray("MainNotice");
-                        JSONArray toolbarImageArray = response.getJSONArray("MainRolling");
-                        JSONObject toolbarImageObject = toolbarImageArray.getJSONObject(0);
-                        JSONArray buttonImageArray = response.getJSONArray("MainBnr");
 
-                        JSONArray costomerImageArray = response.getJSONArray("MainSupoort");
-                        JSONObject costomerImageObject = costomerImageArray.getJSONObject(0);
-
-                        for (int i = 0; i < 4; i++) {  //공지사항
+                        JSONArray noticeArray = response.getJSONArray("MainNotice");  //공지사항 셋팅
+                        for (int i = 0; i < 4; i++) {
                             JSONObject noticeObject = noticeArray.getJSONObject(i);
                             mNoticeList.add(new noticeModel(noticeObject.getString("BbCode"), noticeObject.getString("BbsSeq"),
                                     noticeObject.getString("Ct"), noticeObject.getString("Tit"), noticeObject.getString("InsDate")));
                         }
 
-                        binding.toolbarImage.setImageURI(Uri.parse(toolbarImageObject.getString("ImgUrl")));  //툴바이미지
+                        JSONArray toolbarImageArray = response.getJSONArray("MainRolling");  //툴바 이미지 셋팅
+                        JSONObject toolbarImageObject = toolbarImageArray.getJSONObject(0);
+                        Glide.with(MainActivity.this).load("http://thebay.co.kr" + toolbarImageObject.getString("ImgUrl")).centerCrop().into(binding.toolbarImage);
 
-                        binding.mainButton1.setOnClickListener(MainActivity.this);  //메인 버튼
-                        binding.mainButton2.setOnClickListener(MainActivity.this);
-                        binding.mainButton3.setOnClickListener(MainActivity.this);
-                        binding.mainButton4.setOnClickListener(MainActivity.this);
-                        binding.mainButton5.setOnClickListener(MainActivity.this);
-                        binding.mainButton6.setOnClickListener(MainActivity.this);
-
+                        JSONArray buttonImageArray = response.getJSONArray("MainBnr");  //메인 6개 버튼 셋팅
                         mButtonImageList = new ArrayList<>();
                         for (int i = 0; i < buttonImageArray.length(); i++) {
                             JSONObject buttonImageObject = buttonImageArray.getJSONObject(i);
-                            mButtonImageList.add(new ButtonModel(buttonImageObject.getString("ImgUrl"),buttonImageObject.getString("AppMenu")));
-                            mImageViews[i].setImageURI(Uri.parse(mButtonImageList.get(i).getImageUrl()));
+                            mButtonImageList.add(new ButtonModel(buttonImageObject.getString("ImgUrl"), buttonImageObject.getString("AppMenu")));
+                            Glide.with(MainActivity.this).load("http://thebay.co.kr" + mButtonImageList.get(i).getImageUrl()).into(mImageViews[i]);
+                            mImageViews[i].setOnClickListener(MainActivity.this);
                         }
 
-                        binding.customerBottomBanner.setImageURI(Uri.parse(costomerImageObject.getString("ImgUrl")));
+                        JSONArray customerImageArray = response.getJSONArray("MainSupport");  //하단 고객센터 이미지 셋팅
+                        JSONObject customerImageObject = customerImageArray.getJSONObject(0);
+                        Glide.with(MainActivity.this).load("http://thebay.co.kr" + customerImageObject.getString("ImgUrl")).centerCrop().into(binding.customerBottomBanner); //고객배너 이미지
 
-                        initViewPager();
-                        movePage();
+                        initViewPager();  //공지사항 뷰 페이져
+                        movePage();  //공지사항 움직이게
                         binding.parentLayout.setVisibility(View.VISIBLE);
                     } else {
                         Toast.makeText(getApplicationContext(), "로그인 정보가 틀립니다.", Toast.LENGTH_SHORT).show();
@@ -309,8 +352,6 @@ public class MainActivity extends ParentActivity implements Serializable, View.O
         long tempTime = System.currentTimeMillis();
         long intervalTime = tempTime - backPressedTime;
 
-//        if (binding.drawerLayout.isDrawerOpen(GravityCompat.START)) {
-//            binding.drawerLayout.closeDrawer(GravityCompat.START);
         if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
             getSupportFragmentManager().popBackStack();
         } else if (0 <= intervalTime && FINISH_INTERVAL_TIME >= intervalTime) {
@@ -430,20 +471,6 @@ public class MainActivity extends ParentActivity implements Serializable, View.O
 //        binding.drawerLayout.closeDrawer(GravityCompat.START);
 //        return true;
 //    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-//        EventBus.getDefault().register(this);
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-//        EventBus.getDefault().unregister(this);
-        isMovePageThread = false;
-    }
-
 
 //    @Override
 //    public void onTabSelected(@IdRes int tabId) {

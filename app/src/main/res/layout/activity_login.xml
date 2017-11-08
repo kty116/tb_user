@@ -18,10 +18,11 @@
             android:paddingRight="50dp">
 
             <LinearLayout
+                android:layout_marginBottom="@dimen/default_padding"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="0.7"
-                android:gravity="center"
+                android:layout_weight="0.6"
+                android:gravity="center|bottom"
                 android:orientation="vertical">
 
                 <TextView
@@ -53,7 +54,7 @@
                 android:gravity="center"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="1.2"
+                android:layout_weight="1"
                 android:orientation="vertical"
                 android:padding="20dp">
 
@@ -99,18 +100,19 @@
             </LinearLayout>
 
             <LinearLayout
+                android:paddingTop="@dimen/default_padding"
                 android:paddingBottom="30dp"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="1.2"
+                android:layout_weight="1"
                 android:gravity="center"
                 android:orientation="horizontal">
 
                 <android.support.v7.widget.CardView
-                    android:id="@+id/info_search_button"
+                    android:id="@+id/sign_up_button"
                     android:layout_width="110dp"
                     android:layout_height="110dp"
-                    android:layout_gravity="left|center"
+                    android:layout_gravity="left"
                     android:layout_marginRight="10dp"
                     app:cardElevation="5dp"
                     app:cardUseCompatPadding="true">
@@ -128,32 +130,32 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:gravity="center_horizontal"
-                            android:text="ID 찾기"
+                            android:text="더베이"
                             android:textColor="@color/white"
                             android:textStyle="bold" />
 
                         <TextView
                             android:textSize="12dp"
+                            android:layout_marginBottom="5dp"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginBottom="@dimen/default_padding"
                             android:gravity="center"
-                            android:text="패스워드 찾기"
+                            android:text="회원가입"
                             android:textColor="@color/white"
                             android:textStyle="bold" />
 
                         <ImageView
                             android:layout_width="20dp"
                             android:layout_height="20dp"
-                            android:src="@drawable/login_btn_seekid" />
+                            android:src="@drawable/login_btn_join" />
                     </LinearLayout>
                 </android.support.v7.widget.CardView>
 
                 <android.support.v7.widget.CardView
-                    android:id="@+id/sign_up_button"
+                    android:id="@+id/confirm_button"
                     android:layout_width="110dp"
                     android:layout_height="110dp"
-                    android:layout_gravity="right|center"
+                    android:layout_gravity="right"
                     app:cardElevation="5dp"
                     app:cardUseCompatPadding="true">
 
@@ -167,28 +169,18 @@
 
                         <TextView
                             android:textSize="12dp"
-                            android:layout_marginBottom="3dp"
+                            android:layout_marginBottom="5dp"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:gravity="center_horizontal"
-                            android:text="더베이"
-                            android:textColor="@color/white"
-                            android:textStyle="bold" />
-
-                        <TextView
-                            android:textSize="12dp"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginBottom="@dimen/default_padding"
-                            android:gravity="center"
-                            android:text="회원가입"
+                            android:text="로그인"
                             android:textColor="@color/white"
                             android:textStyle="bold" />
 
                         <ImageView
                             android:layout_width="20dp"
                             android:layout_height="20dp"
-                            android:src="@drawable/login_btn_join" />
+                            android:src="@drawable/login_btn_seekid" />
                     </LinearLayout>
                 </android.support.v7.widget.CardView>
             </LinearLayout>
@@ -236,21 +228,21 @@
             <!--android:textSize="@dimen/medium_text_size" />-->
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="0.7"
-            android:orientation="vertical">
-
-            <Button
-                android:id="@+id/login_button"
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:background="#404040"
-                android:text="로그인"
-                android:textColor="@color/white"
-                android:textSize="@dimen/small_text_size"
-                android:textStyle="bold" />
-        </LinearLayout>
+        <!--<LinearLayout-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="0dp"-->
+            <!--android:layout_weight="0.7"-->
+            <!--android:orientation="vertical">-->
+<!---->
+            <!--<Button-->
+                <!--android:id="@+id/login_button"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="40dp"-->
+                <!--android:background="#404040"-->
+                <!--android:text="로그인"-->
+                <!--android:textColor="@color/white"-->
+                <!--android:textSize="@dimen/small_text_size"-->
+                <!--android:textStyle="bold" />-->
+        <!--</LinearLayout>-->
     </LinearLayout>
 </layout>
